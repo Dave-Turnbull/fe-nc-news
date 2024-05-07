@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import apiCall from '../../../apiCall'
-import { ArticleItem } from './ArticleItem'
+import apiCall from '../../hooks/apiCall'
+import { ArticleItem } from './components/ArticleItem/ArticleItem'
+import './RenderArticles.css'
 
 export const RenderArticles = () => {
     const [articles, setArticles] = useState([])

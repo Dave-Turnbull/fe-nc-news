@@ -1,0 +1,17 @@
+ul {
+    list-style: none;
+  }
+
+.articlesList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.articlesList li {
+    width: 300px;
+}
+
+.articlesList li > img{
+    width: 100%;
+}

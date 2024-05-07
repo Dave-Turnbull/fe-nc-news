@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import './App.css'
 
-import { Header } from './components/Header'
-import { Routing } from './components/Routes'
-import { Footer } from './components/Footer'
+import { Header } from './components/Header/Header'
+import { Routing } from './routes'
+import { Footer } from './components/Footer/Footer'
 
 function App() {
 

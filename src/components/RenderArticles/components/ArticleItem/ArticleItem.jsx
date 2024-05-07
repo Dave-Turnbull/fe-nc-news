@@ -1,5 +1,4 @@
 export const ArticleItem = ({article}) => {
-    console.log(article)
     return (
         <li key={article.id}>
             <img src={article.article_img_url} />
