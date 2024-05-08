@@ -1,41 +1,37 @@
 import { useState, useEffect } from 'react'
-import apiCall from '../../hooks/apiCall'
+import { getArticles } from '../../utils/utils'
 import { ArticleItem } from './components/ArticleItem/ArticleItem'
+import { LoadMoreBtn } from '../LoadMoreBtn/LoadMoreBtn'
 import './RenderArticles.css'
 
 export const RenderArticles = () => {
     const [articles, setArticles] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [pageNumber, setPageNumber] = useState(1)
+    const [totalArticles, setTotalArticles] = useState(-1)
 
     useEffect(() => {
         setIsLoading(true)
-        apiCall.get('articles').then((response) => {
-            setArticles(response.data.articles)
-            setIsLoading(false)
-        }).catch(err => console.log(err))
-    }, [])
-
-    const handleLoadMore = () => {
-        setIsLoading(true)
-        setPageNumber(curr => ++curr)
-        apiCall.get('articles', `?p=${pageNumber}`).then((response) => {
-            console.log('loaded')
-            setArticles((current) => {
-                return [...current, ...response.data.articles]
-            })
-            setIsLoading(false)
-        }).catch(err => console.log(err))
-    }
+        getArticles(setArticles, setTotalArticles, setIsLoading, pageNumber)
+    }, [pageNumber])
 
    return (
     <main>
         <ul className='articlesList'>
             {articles.map(article => {
-                return <ArticleItem article={article}/>
+                return (
+                <li key={article.article_id}>
+                    <ArticleItem article={article}/>
+                </li>
+                )
             })}
         </ul>
-        {isLoading?<main>Loading</main>:<button onClick={handleLoadMore}>Load More...</button>}
+        <LoadMoreBtn 
+            isLoading = {isLoading} 
+            setPageNumber = {setPageNumber}
+            currentItems = {articles.length}
+            totalItems = {totalArticles}
+        />
     </main>
    )
 }
