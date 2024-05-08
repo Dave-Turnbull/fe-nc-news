@@ -5,7 +5,7 @@ export const Header = () => {
     return (
         <header>
             <nav>
-                <Link href="/">Home</Link>
+                <Link to="/">Home</Link>
             </nav>
             <div>
                 <label htmlFor="searchbox">Search</label>
