@@ -29,6 +29,18 @@ export const getComments = (setComments, setIsLoading, article_id, pageNumber) =
     }).catch(err => console.log(err))
 }
 
+export const changeVotes = (endpoint, votes, setVoteNum, setIsLoading) => {
+    setIsLoading(true)
+    const body = {
+        "inc_votes": votes
+    }
+    apiCall.patch(endpoint, body).then((response) => {
+        console.log(response.data.votes, 'votes')
+        setVoteNum(response.data.votes)
+        setIsLoading(false)
+    })
+}
+
 export const formatDate = (dateString) => {
     const stringData = dateString.match(/(\d+)/g)
     return `${stringData[3]}:${stringData[4]}, ${stringData[2]}/${stringData[1]}/${stringData[0]}`

@@ -2,6 +2,8 @@ import { useState, useEffect } from "react"
 import { useParams } from 'react-router-dom'
 import { getSingleArticle } from "../../utils/utils";
 import { RenderComments } from "../../components/RenderComments/RenderComments";
+import { Voting } from "../../components/Voting/Voting";
+import { Loading } from "../../components/Loading/Loading";
 
 export const SingleArticle = () => {
     const { article_id } = useParams();
@@ -12,7 +14,7 @@ export const SingleArticle = () => {
         getSingleArticle(setArticle, setIsLoading, article_id)
     }, [])
 
-    if (isLoading) return (<p>Loading</p>)
+    if (isLoading) return (<Loading/>)
     
     return (
         <main>
@@ -24,7 +26,7 @@ export const SingleArticle = () => {
                 <p>{article.created_at}</p>
                 <p>topic: {article.topic}</p>
                 <p>Comments: {article.comment_count}</p>
-                <p>Votes: {article.votes}</p>
+                <Voting endpoint={`articles/${article_id}`} itemVotes={article.votes}/>
                 <section>
                     <RenderComments article_id={article_id} comment_count={article.comment_count}/>
                 </section>

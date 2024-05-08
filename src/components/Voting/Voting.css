@@ -1,0 +1,28 @@
+.voting-wrapper{
+    width: 100%;
+    max-width: 300px;
+    margin: auto;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.voting-wrapper button {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+}
+
+.voting-wrapper .vote-up {
+    color: rgb(152, 125, 18);
+}
+.voting-wrapper .vote-down {
+    color: rgb(152, 18, 18);
+}
+.voting-wrapper .vote-down.active-vote {
+    box-shadow: 0 0 10px rgb(152, 18, 18);
+}
+.voting-wrapper .vote-up.active-vote {
+    box-shadow: 0 0 10px rgb(152, 125, 18);
+}
