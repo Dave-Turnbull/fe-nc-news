@@ -12,6 +12,6 @@ ul {
     width: 300px;
 }
 
-.articlesList li > img{
+.articlesList li a > img{
     width: 100%;
 }
