@@ -38,7 +38,7 @@ export const changeVotes = (endpoint, votes, setVoteNum, setIsLoading) => {
         console.log(response.data.votes, 'votes')
         setVoteNum(response.data.votes)
         setIsLoading(false)
-    })
+    }).catch(err => console.log(err))
 }
 
 export const formatDate = (dateString) => {

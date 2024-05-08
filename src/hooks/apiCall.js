@@ -7,10 +7,11 @@ export const get = (endpoint, queries) => {
 }
 
 export const patch = (endpoint, body) => {
-    return axios.patch(apiUrl + endpoint, body).then((repsonse) => {
-        console.log(repsonse)
-        return repsonse
-    })
+    return axios.patch(apiUrl + endpoint, body)
 }
 
-export default {get, patch}
+export const post = (endpoint, body) => {
+    return axios.post(apiUrl + endpoint, body)
+}
+
+export default {get, patch, post}
