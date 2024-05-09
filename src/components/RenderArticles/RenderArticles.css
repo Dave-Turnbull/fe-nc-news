@@ -1,11 +1,9 @@
-ul {
-    list-style: none;
-  }
-
 .articlesList {
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
+    width: 100%;
+    margin: 10px 20px
 }
 
 .articlesList li {

@@ -1,0 +1,9 @@
+.sort-by-menu {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    margin: 10px 20px;
+}
+.sort-by-menu ul{
+    display: flex;
+}

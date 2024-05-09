@@ -3,20 +3,25 @@ import apiCall from '../../hooks/apiCall'
 import { ArticleItem } from './components/ArticleItem/ArticleItem'
 import { LoadMoreBtn } from '../LoadMoreBtn/LoadMoreBtn'
 import './RenderArticles.css'
+import { SortBy } from '../SortBy/SortBy'
 
 export const RenderArticles = ({queries}) => {
     const [articles, setArticles] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [pageNumber, setPageNumber] = useState(1)
     const [totalArticles, setTotalArticles] = useState(-1)
+    const [sortItemsBy, setSortItemsBy] = useState('article_id')
+    const [isAscOrder, setIsAscOrder] = useState(false)
 
     useEffect(() => {
         setArticles([])
-    }, [queries])
+    }, [queries, sortItemsBy, isAscOrder])
 
     useEffect(() => {
         const queriesToSend = {
             ...queries,
+            sort_by: sortItemsBy,
+            order: isAscOrder?'asc':'desc',
             p: pageNumber
         }
         setIsLoading(true)
@@ -27,11 +32,21 @@ export const RenderArticles = ({queries}) => {
             setTotalArticles(response.data.total_count)
             setIsLoading(false)
         }).catch(err => console.log(err))
-    }, [pageNumber, queries])
+    }, [pageNumber, queries, sortItemsBy, isAscOrder])
+
+    const sortOptions={
+        "Article ID": "article_id",
+        "Date": "created_at",
+        "Votes": 'votes',
+        "Author": 'author',
+        "Title": 'title',
+        "Topic": 'topic'
+    }
 
    return (
     <main>
         <p>{queries&&queries.topic_slug}</p>
+        <SortBy sortOptions={sortOptions} setSortItemsBy={setSortItemsBy} isAscOrder={isAscOrder} setIsAscOrder={setIsAscOrder}/>
         <ul className='articlesList'>
             {articles.map(article => {
                 return (
