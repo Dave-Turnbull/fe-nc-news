@@ -4,6 +4,7 @@ import { getSingleArticle } from "../../utils/utils";
 import { RenderComments } from "../../components/RenderComments/RenderComments";
 import { Voting } from "../../components/Voting/Voting";
 import { Loading } from "../../components/Loading/Loading";
+import { CommentInput } from "../../components/RenderComments/components/CommentInput/CommentInput";
 
 export const SingleArticle = () => {
     const { article_id } = useParams();

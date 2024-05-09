@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { formatDate } from '../utils/utils.js'
+import { formatDate, concatResponses } from '../utils/utils.js'
 import { testHandleVoteChange } from './testFunctions.js'
 
 describe('formatDate()', () => {

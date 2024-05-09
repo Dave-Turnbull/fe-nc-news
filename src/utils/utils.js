@@ -35,8 +35,15 @@ export const changeVotes = (endpoint, votes, setVoteNum, setIsLoading) => {
         "inc_votes": votes
     }
     apiCall.patch(endpoint, body).then((response) => {
-        console.log(response.data.votes, 'votes')
         setVoteNum(response.data.votes)
+        setIsLoading(false)
+    }).catch(err => console.log(err))
+}
+
+export const postComment = (endpoint, body, setPostedComment, setIsLoading) => {
+    setIsLoading(true)
+    apiCall.post(endpoint, body).then((response) => {
+        setPostedComment(response.data)
         setIsLoading(false)
     }).catch(err => console.log(err))
 }
