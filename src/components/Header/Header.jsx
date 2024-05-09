@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import './Header.css'
+import { Login } from "./components/Login"
 
 export const Header = () => {
     return (
@@ -12,6 +13,7 @@ export const Header = () => {
                 <input id="searchbox"/>
                 <button>Search</button>
             </div>
+            <Login/>
         </header>
     )
 }

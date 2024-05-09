@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { getComments } from "../../utils/utils"
 import { CommentItem } from "./components/CommentItem.jsx/CommentItem"
 import { Loading } from "../Loading/Loading"
 import { LoadMoreBtn } from "../LoadMoreBtn/LoadMoreBtn"
+import { CommentInput } from "./components/CommentInput/CommentInput"
 import './RenderComments.css'
 
 export const RenderComments = ({article_id, comment_count}) => {
@@ -22,7 +23,8 @@ export const RenderComments = ({article_id, comment_count}) => {
 
     return (
         <>
-        <ul>
+        <CommentInput articleId = {article_id}/>
+        <ul className="render-comments">
             {comments.map((comment) => {
                 return (
                     <li key={comment.comment_id}>

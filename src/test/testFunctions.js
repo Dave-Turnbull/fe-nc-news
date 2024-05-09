@@ -6,6 +6,5 @@ export const testHandleVoteChange = (inputVote, currentVote) => {
         newVote = inputVote - currentVote
         
     }
-    console.log(`currentVote: ${currentVote}, inputVote: ${inputVote}, newVote: ${newVote}`)
     return currentVote + newVote
 }
