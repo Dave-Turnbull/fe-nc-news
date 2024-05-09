@@ -1,18 +1,34 @@
 import { useState, useEffect } from "react"
 import { useParams } from 'react-router-dom'
-import { getSingleArticle } from "../../utils/utils";
 import { RenderComments } from "../../components/RenderComments/RenderComments";
 import { Voting } from "../../components/Voting/Voting";
 import { Loading } from "../../components/Loading/Loading";
+import apiCall from "../../hooks/apiCall";
 
 export const SingleArticle = () => {
     const { article_id } = useParams();
     const [article, setArticle] = useState({})
     const [isLoading, setIsLoading] = useState(true)
+    const [errorMessage, setErrorMessage] = useState('')
 
     useEffect(() => {
-        getSingleArticle(setArticle, setIsLoading, article_id)
+        setIsLoading(true)
+        apiCall.get(`articles/${article_id}`).then((response) => {
+            setArticle(response.data)
+            setIsLoading(false)
+        }).catch(err => {
+            console.log(err)
+            setErrorMessage(err.response.data.message)
+        })
     }, [])
+
+    if (errorMessage) {
+        return (
+            <main>
+                <p>{errorMessage}</p>
+            </main>
+        )
+    }
 
     if (isLoading) return (<Loading/>)
     

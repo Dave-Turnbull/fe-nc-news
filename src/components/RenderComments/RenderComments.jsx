@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react"
-import { getComments } from "../../utils/utils"
 import { CommentItem } from "./components/CommentItem.jsx/CommentItem"
 import { Loading } from "../Loading/Loading"
 import { LoadMoreBtn } from "../LoadMoreBtn/LoadMoreBtn"
 import { CommentInput } from "./components/CommentInput/CommentInput"
+import apiCall from "../../hooks/apiCall"
 import './RenderComments.css'
 
 export const RenderComments = ({article_id, comment_count}) => {
@@ -14,10 +14,34 @@ export const RenderComments = ({article_id, comment_count}) => {
     const [comments, setComments] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [pageNumber, setPageNumber] = useState(1)
+    const [errorMessage, setErrorMessage] = useState('')
 
     useEffect(() => {
-        getComments(setComments, setIsLoading, article_id, pageNumber)
+        setIsLoading(true)
+        const queriesToSend = {
+            p: pageNumber
+        }
+        apiCall.get(`articles/${article_id}/comments`, queriesToSend)
+        .then((response) => {
+            setComments((current) => {
+                return [...current, ...response.data.comments]
+            })
+            setIsLoading(false)
+        })
+        .catch(err => {
+            console.log(err)
+            setErrorMessage(err.response.data.message)
+        })
     }, [pageNumber])
+
+
+    if (errorMessage) {
+        return (
+            <main>
+                <p>{errorMessage}</p>
+            </main>
+        )
+    }
 
     if (isLoading) return <Loading/>
 

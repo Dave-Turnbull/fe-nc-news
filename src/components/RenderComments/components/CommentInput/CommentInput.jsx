@@ -1,13 +1,14 @@
 import { useState, useContext } from "react"
 import { UserContext } from "../../../../contexts/UserContext"
-import { postComment } from "../../../../utils/utils"
 import { CommentItem } from "../CommentItem.jsx/CommentItem"
 import { Loading } from "../../../Loading/Loading"
+import apiCall from "../../../../hooks/apiCall"
 
 export const CommentInput = ({articleId}) => {
     const [commentInputBody, setCommentInputBody] = useState('')
     const [postedComment, setPostedComment] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
     const {user} = useContext(UserContext)
     
     if (!user) {
@@ -16,13 +17,38 @@ export const CommentInput = ({articleId}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        if (!commentInputBody) {
+            setErrorMessage('Write a comment before posting')
+            return
+        }
         const sendData = {
             "username": user,
             "body": commentInputBody
         }
         //need to add some logic so the comments re-render after posting (to avoid key conflicts)
         //tried to but it would re-render is component when I did so
-        postComment(`articles/${articleId}/comments`, sendData, setPostedComment, setIsLoading)
+        setIsLoading(true)
+        apiCall.post(`articles/${articleId}/comments`, sendData).then((response) => {
+            setPostedComment(response.data)
+            setIsLoading(false)
+        }).catch(err => {
+            console.log(err)
+            setErrorMessage(err.response.data.message)
+        })
+    }
+
+    if (errorMessage) {
+        return (
+            <section>
+                <p>Failed to post comment!</p>
+                <p>{errorMessage}</p>
+                <button onClick={() => {
+                    setPostedComment('')
+                    setErrorMessage('')
+                    setIsLoading(false)
+                    }}>Try again</button>
+            </section>
+        )
     }
 
     if (postedComment) {
