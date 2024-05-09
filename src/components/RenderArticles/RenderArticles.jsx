@@ -12,6 +12,7 @@ export const RenderArticles = ({queries}) => {
     const [totalArticles, setTotalArticles] = useState(-1)
     const [sortItemsBy, setSortItemsBy] = useState('article_id')
     const [isAscOrder, setIsAscOrder] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
 
     useEffect(() => {
         setArticles([])
@@ -31,7 +32,10 @@ export const RenderArticles = ({queries}) => {
             })
             setTotalArticles(response.data.total_count)
             setIsLoading(false)
-        }).catch(err => console.log(err))
+        }).catch(err => {
+            console.log(err)
+            setErrorMessage(err.response.data.message)
+        })
     }, [pageNumber, queries, sortItemsBy, isAscOrder])
 
     const sortOptions={
@@ -41,6 +45,15 @@ export const RenderArticles = ({queries}) => {
         "Author": 'author',
         "Title": 'title',
         "Topic": 'topic'
+    }
+
+
+    if (errorMessage) {
+        return (
+            <main>
+                <p>{errorMessage}</p>
+            </main>
+        )
     }
 
    return (

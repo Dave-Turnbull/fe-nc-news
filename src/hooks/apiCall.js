@@ -13,10 +13,7 @@ export const get = (endpoint, queries) => {
         method: 'get',
         params: queries
     }
-    return api.request(req).then((response)=> {
-        console.log(response)
-        return response
-    })
+    return api.request(req)
 }
 
 export const patch = (endpoint, body) => {

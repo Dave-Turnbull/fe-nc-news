@@ -8,24 +8,6 @@ export const getTopics = (setTopics, setIsLoading) => {
     }).catch(err => console.log(err))
 }
 
-export const getSingleArticle = (SetArticle, setIsLoading, article_id) => {
-    setIsLoading(true)
-    apiCall.get(`articles/${article_id}`).then((response) => {
-        SetArticle(response.data)
-        setIsLoading(false)
-    }).catch(err => console.log(err))
-}
-
-export const getComments = (setComments, setIsLoading, article_id, pageNumber) => {
-    setIsLoading(true)
-    apiCall.get(`articles/${article_id}/comments`, `p=${pageNumber}`).then((response) => {
-        setComments((current) => {
-            return [...current, ...response.data.comments]
-        })
-        setIsLoading(false)
-    }).catch(err => console.log(err))
-}
-
 export const changeVotes = (endpoint, votes, setVoteNum, setIsLoading) => {
     setIsLoading(true)
     const body = {
@@ -33,14 +15,6 @@ export const changeVotes = (endpoint, votes, setVoteNum, setIsLoading) => {
     }
     apiCall.patch(endpoint, body).then((response) => {
         setVoteNum(response.data.votes)
-        setIsLoading(false)
-    }).catch(err => console.log(err))
-}
-
-export const postComment = (endpoint, body, setPostedComment, setIsLoading) => {
-    setIsLoading(true)
-    apiCall.post(endpoint, body).then((response) => {
-        setPostedComment(response.data)
         setIsLoading(false)
     }).catch(err => console.log(err))
 }
