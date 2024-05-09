@@ -21,7 +21,7 @@ export const getSingleArticle = (SetArticle, setIsLoading, article_id) => {
 
 export const getComments = (setComments, setIsLoading, article_id, pageNumber) => {
     setIsLoading(true)
-    apiCall.get(`articles/${article_id}/comments`, `?p=${pageNumber}`).then((response) => {
+    apiCall.get(`articles/${article_id}/comments`, `p=${pageNumber}`).then((response) => {
         setComments((current) => {
             return [...current, ...response.data.comments]
         })
@@ -44,6 +44,12 @@ export const postComment = (endpoint, body, setPostedComment, setIsLoading) => {
     setIsLoading(true)
     apiCall.post(endpoint, body).then((response) => {
         setPostedComment(response.data)
+        setIsLoading(false)
+    }).catch(err => console.log(err))
+}
+
+export const deleteItem = (endpoint, setIsLoading) => {
+    apiCall.remove(endpoint).then(() => {
         setIsLoading(false)
     }).catch(err => console.log(err))
 }
