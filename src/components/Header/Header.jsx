@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom"
 import './Header.css'
-import { Login } from "./components/Login"
+import { Login } from "./components/Login/Login"
+import { NavBarLinks } from "./components/NavBarLinks.jsx/NavBarLinks"
 
 export const Header = () => {
     return (
         <header>
             <nav>
-                <Link to="/">Home</Link>
+                <NavBarLinks/>
             </nav>
             <div>
                 <label htmlFor="searchbox">Search</label>

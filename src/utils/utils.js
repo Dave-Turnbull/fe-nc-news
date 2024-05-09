@@ -1,12 +1,9 @@
 import apiCall from "../hooks/apiCall"
 
-export const getArticles = (setArticles, setTotalArticles, setIsLoading, pageNumber = 1) => {
+export const getTopics = (setTopics, setIsLoading) => {
     setIsLoading(true)
-    return apiCall.get('articles', `?p=${pageNumber}`).then((response) => {
-        setArticles((current) => {
-            return [...current, ...response.data.articles]
-        })
-        setTotalArticles(response.data.total_count)
+    return apiCall.get('topics').then((response) => {
+        setTopics(response.data.topics)
         setIsLoading(false)
     }).catch(err => console.log(err))
 }
