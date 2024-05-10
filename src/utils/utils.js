@@ -1,20 +1,21 @@
 import apiCall from "../hooks/apiCall"
 
+export const handleError = (err, setErrorMessage) => {
+    console.log(err)
+    if (err.message === "timeout of 1000ms exceeded") {
+        setErrorMessage("Request timed out")
+    }
+    if (err.response) {
+        const errMessage = err.response.data.message
+        const formattedMessage = errMessage.charAt(0).toUpperCase() + errMessage.slice(1) + '.';
+        setErrorMessage(formattedMessage)
+    }
+}
+
 export const getTopics = (setTopics, setIsLoading) => {
     setIsLoading(true)
     return apiCall.get('topics').then((response) => {
         setTopics(response.data.topics)
-        setIsLoading(false)
-    }).catch(err => console.log(err))
-}
-
-export const changeVotes = (endpoint, votes, setVoteNum, setIsLoading) => {
-    setIsLoading(true)
-    const body = {
-        "inc_votes": votes
-    }
-    apiCall.patch(endpoint, body).then((response) => {
-        setVoteNum(response.data.votes)
         setIsLoading(false)
     }).catch(err => console.log(err))
 }

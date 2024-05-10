@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
-import apiCall from '../../hooks/apiCall'
+import { useParams } from 'react-router-dom';
 import { ArticleItem } from './components/ArticleItem/ArticleItem'
 import { LoadMoreBtn } from '../LoadMoreBtn/LoadMoreBtn'
+import { handleError } from '../../utils/utils'
+import apiCall from '../../hooks/apiCall'
 import './RenderArticles.css'
 import { SortBy } from '../SortBy/SortBy'
 
 export const RenderArticles = ({queries}) => {
+    const params = useParams();
+
     const [articles, setArticles] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [pageNumber, setPageNumber] = useState(1)
@@ -16,11 +20,12 @@ export const RenderArticles = ({queries}) => {
 
     useEffect(() => {
         setArticles([])
-    }, [queries, sortItemsBy, isAscOrder])
+    }, [queries, params, sortItemsBy, isAscOrder])
 
     useEffect(() => {
         const queriesToSend = {
             ...queries,
+            ...params,
             sort_by: sortItemsBy,
             order: isAscOrder?'asc':'desc',
             p: pageNumber
@@ -32,11 +37,9 @@ export const RenderArticles = ({queries}) => {
             })
             setTotalArticles(response.data.total_count)
             setIsLoading(false)
-        }).catch(err => {
-            console.log(err)
-            setErrorMessage(err.response.data.message)
         })
-    }, [pageNumber, queries, sortItemsBy, isAscOrder])
+        .catch(err => handleError(err, setErrorMessage))
+    }, [pageNumber, queries, params, sortItemsBy, isAscOrder])
 
     const sortOptions={
         "Article ID": "article_id",

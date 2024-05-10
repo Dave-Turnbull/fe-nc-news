@@ -2,6 +2,7 @@ import { useState, useContext } from "react"
 import { UserContext } from "../../../../contexts/UserContext"
 import { CommentItem } from "../CommentItem.jsx/CommentItem"
 import { Loading } from "../../../Loading/Loading"
+import { handleError } from "../../../../utils/utils"
 import apiCall from "../../../../hooks/apiCall"
 
 export const CommentInput = ({articleId}) => {
@@ -31,10 +32,7 @@ export const CommentInput = ({articleId}) => {
         apiCall.post(`articles/${articleId}/comments`, sendData).then((response) => {
             setPostedComment(response.data)
             setIsLoading(false)
-        }).catch(err => {
-            console.log(err)
-            setErrorMessage(err.response.data.message)
-        })
+        }).catch(err => handleError(err, setErrorMessage))
     }
 
     if (errorMessage) {

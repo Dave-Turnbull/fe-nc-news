@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { RenderComments } from "../../components/RenderComments/RenderComments";
 import { Voting } from "../../components/Voting/Voting";
 import { Loading } from "../../components/Loading/Loading";
+import { handleError } from "../../utils/utils";
 import apiCall from "../../hooks/apiCall";
 
 export const SingleArticle = () => {
@@ -16,10 +17,7 @@ export const SingleArticle = () => {
         apiCall.get(`articles/${article_id}`).then((response) => {
             setArticle(response.data)
             setIsLoading(false)
-        }).catch(err => {
-            console.log(err)
-            setErrorMessage(err.response.data.message)
-        })
+        }).catch(err => handleError(err, setErrorMessage))
     }, [])
 
     if (errorMessage) {

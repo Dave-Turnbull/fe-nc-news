@@ -4,7 +4,7 @@ const apiUrl = 'https://nc-news-b2gg.onrender.com/api/'
 
 const api = axios.create({
     baseURL: apiUrl,
-    timeout: 1000,
+    timeout: 10000,
 })
 
 export const get = (endpoint, queries) => {

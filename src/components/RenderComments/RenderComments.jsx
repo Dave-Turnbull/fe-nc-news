@@ -1,14 +1,20 @@
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect } from "react"
 import { CommentItem } from "./components/CommentItem.jsx/CommentItem"
 import { Loading } from "../Loading/Loading"
 import { LoadMoreBtn } from "../LoadMoreBtn/LoadMoreBtn"
 import { CommentInput } from "./components/CommentInput/CommentInput"
+import { handleError } from "../../utils/utils"
 import apiCall from "../../hooks/apiCall"
 import './RenderComments.css'
 
 export const RenderComments = ({article_id, comment_count}) => {
     if (comment_count === 0) {
-        return <p>No Comments</p>
+        return (
+        <>
+            <CommentInput articleId = {article_id}/>
+            <p>No Comments</p>
+        </>
+        )
     }
 
     const [comments, setComments] = useState([])
@@ -28,10 +34,7 @@ export const RenderComments = ({article_id, comment_count}) => {
             })
             setIsLoading(false)
         })
-        .catch(err => {
-            console.log(err)
-            setErrorMessage(err.response.data.message)
-        })
+        .catch(err => handleError(err, setErrorMessage))
     }, [pageNumber])
 
 
