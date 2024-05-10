@@ -2,46 +2,50 @@ import { useContext, useState } from "react"
 import { UserContext } from "../../../../contexts/UserContext"
 import { ModalWindow } from "../../../ModalWindow/ModalWindow"
 import './Login.css'
+import { userAuth } from "../../../../hooks/userAuth"
+import { Loading } from "../../../Loading/Loading"
 
 
 export const Login = () => {
     const {user, setUser} = useContext(UserContext)
     const [input, setInput] = useState('')
     const [showModal, setShowModal] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [loginErrorMsg, setLoginErrorMsg] = useState('')
 
     const handleLogin = (e) => {
         e.preventDefault()
-        setUser(input)
-        setShowModal(false)
+        userAuth(input, setIsLoading, setLoginErrorMsg, setUser)
     }
     const handleLogout = () => {
-        setUser('')
+        setUser({})
         setShowModal(false)
     }
     const handleShowModal= () => {
         setShowModal(curr => !curr)
     }
 
-    if (user) {
+    if (user.username) {
         return (
-            <div class="login-wrapper">
-                <button onClick={handleShowModal}>👤 {user}</button>
+            <div className="login-wrapper">
+                <button onClick={handleShowModal}>👤 {user.username}</button>
                 <ModalWindow showWindow={showModal} setShowWindow={setShowModal}>
-                    <p>Logged in as {user}</p>
-                    <button onClick={handleLogout}>Logout</button>
+                    <p>Logged in as {user.username}</p>
+                    <button disabled={isLoading} onClick={handleLogout}>{isLoading?<Loading/>:'Logout'}</button>
                 </ModalWindow>
             </div>
         )
     }
 
     return (
-    <div class="login-wrapper">
+    <div className="login-wrapper">
     <button onClick={handleShowModal}>Login</button>
     <ModalWindow showWindow={showModal} setShowWindow={setShowModal}>
         <form>
             <label htmlFor="login-input">User:</label>
             <input id="login-input" value={input} onChange={e => setInput(e.target.value)}/>
-            <button onClick={handleLogin}>Login</button>
+            <button onClick={handleLogin}>{isLoading?<Loading/>:'Logout'}</button>
+            {loginErrorMsg?<p>{loginErrorMsg}</p>:<></>}
         </form>
     </ModalWindow>
     </div>

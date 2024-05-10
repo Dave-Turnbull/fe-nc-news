@@ -31,7 +31,7 @@ export const CommentItem = ({comment}) => {
                 <p>{comment.author}</p>
                 <p>{formatDate(comment.created_at)}</p>
                 <p>{comment.votes}</p>
-                {user === comment.author&&<button disabled={isLoading} onClick={handleDelete}>Delete</button>}
+                {user.username === comment.author&&<button disabled={isLoading} onClick={handleDelete}>Delete</button>}
             </div>
         </article>
     )

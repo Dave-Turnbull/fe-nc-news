@@ -12,7 +12,7 @@ export const CommentInput = ({articleId}) => {
     const [errorMessage, setErrorMessage] = useState('')
     const {user} = useContext(UserContext)
     
-    if (!user) {
+    if (!user.username) {
         return <p>Login to comment</p>
     }
 
@@ -23,7 +23,7 @@ export const CommentInput = ({articleId}) => {
             return
         }
         const sendData = {
-            "username": user,
+            "username": user.username,
             "body": commentInputBody
         }
         //need to add some logic so the comments re-render after posting (to avoid key conflicts)
@@ -61,7 +61,7 @@ export const CommentInput = ({articleId}) => {
 
     return (
         <form>
-            <p>Commenting as {user}</p>
+            <p>Commenting as {user.username}</p>
             <label htmlFor="commentinputbody">Text:</label>
             <input id="commentinputbody" value={commentInputBody} onChange={e => setCommentInputBody(e.target.value)}/>
             <button disabled={isLoading} onClick={handleSubmit}>Submit</button>

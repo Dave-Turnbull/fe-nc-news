@@ -4,12 +4,15 @@ export const handleError = (err, setErrorMessage) => {
     console.log(err)
     if (err.message === "timeout of 1000ms exceeded") {
         setErrorMessage("Request timed out")
+        return err
     }
     if (err.response) {
         const errMessage = err.response.data.message
         const formattedMessage = errMessage.charAt(0).toUpperCase() + errMessage.slice(1) + '.';
         setErrorMessage(formattedMessage)
+        return err
     }
+    setErrorMessage(err)
 }
 
 export const getTopics = (setTopics, setIsLoading) => {
