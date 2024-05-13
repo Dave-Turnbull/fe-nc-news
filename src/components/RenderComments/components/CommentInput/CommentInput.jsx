@@ -4,6 +4,10 @@ import { CommentItem } from "../CommentItem.jsx/CommentItem"
 import { Loading } from "../../../Loading/Loading"
 import { handleError } from "../../../../utils/utils"
 import apiCall from "../../../../hooks/apiCall"
+import { ItemCard } from "../../../ItemCard/ItemCard"
+import { ItemCardMain } from "../../../ItemCard/components/ItemCardMain/ItemCardMain"
+import { ItemCardFooter } from "../../../ItemCard/components/ItemCardFooter/ItemCardFooter"
+import './CommentInput.css'
 
 export const CommentInput = ({articleId}) => {
     const [commentInputBody, setCommentInputBody] = useState('')
@@ -41,7 +45,6 @@ export const CommentInput = ({articleId}) => {
                 <p>Failed to post comment!</p>
                 <p>{errorMessage}</p>
                 <button onClick={() => {
-                    setPostedComment('')
                     setErrorMessage('')
                     setIsLoading(false)
                     }}>Try again</button>
@@ -60,12 +63,20 @@ export const CommentInput = ({articleId}) => {
     }
 
     return (
-        <form>
-            <p>Commenting as {user.username}</p>
-            <label htmlFor="commentinputbody">Text:</label>
-            <input id="commentinputbody" value={commentInputBody} onChange={e => setCommentInputBody(e.target.value)}/>
-            <button disabled={isLoading} onClick={handleSubmit}>Submit</button>
-            {isLoading?<Loading/>:<></>}
-        </form>
+        <div className="comment-input">
+        <ItemCard>
+            <ItemCardMain>
+                <h3>Leave a comment:</h3>
+                <form>
+                    <label htmlFor="commentinputbody">Text:</label>
+                    <textarea id="commentinputbody" value={commentInputBody} onChange={e => setCommentInputBody(e.target.value)}/>
+                    <button disabled={isLoading} onClick={handleSubmit}>{isLoading?<Loading/>:'Submit'}</button>
+                </form>
+            </ItemCardMain>
+            <ItemCardFooter>
+                <p>Commenting as {user.username}</p>
+            </ItemCardFooter>
+        </ItemCard>
+        </div>
     )
 }

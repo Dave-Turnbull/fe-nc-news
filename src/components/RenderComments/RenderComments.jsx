@@ -49,9 +49,9 @@ export const RenderComments = ({article_id, comment_count}) => {
     if (isLoading) return <Loading/>
 
     return (
-        <>
+        <div className="render-comments">
         <CommentInput articleId = {article_id}/>
-        <ul className="render-comments">
+        <ul>
             {comments.map((comment) => {
                 return (
                     <li key={comment.comment_id}>
@@ -66,6 +66,6 @@ export const RenderComments = ({article_id, comment_count}) => {
                 currentItems = {comments.length}
                 totalItems = {comment_count}
             />
-        </>
+        </div>
     )
 }

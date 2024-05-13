@@ -39,7 +39,7 @@ export const Voting = ({endpoint, itemVotes}) => {
                 onClick={() => handleVoteChange(1)}
                 className={`vote-up ${currentVote > 0?"active-vote":"inactive-vote"}`}
             >▲</button>
-            <p>{voteNum}</p>{isLoading?<Loading/>:<></>}
+            <p>{voteNum}</p>
             <button 
                 disabled={isLoading} 
                 onClick={() => handleVoteChange(-1)}

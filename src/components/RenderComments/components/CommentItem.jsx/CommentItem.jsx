@@ -3,6 +3,9 @@ import { UserContext } from "../../../../contexts/UserContext"
 
 import { deleteItem, formatDate } from "../../../../utils/utils"
 import './CommentItem.css'
+import { ItemCard } from "../../../ItemCard/ItemCard"
+import { ItemCardMain } from "../../../ItemCard/components/ItemCardMain/ItemCardMain"
+import { ItemCardFooter } from "../../../ItemCard/components/ItemCardFooter/ItemCardFooter"
 
 export const CommentItem = ({comment}) => {
 
@@ -26,13 +29,19 @@ export const CommentItem = ({comment}) => {
 
     return (
         <article className="commentItem">
+        <ItemCard>
+            <ItemCardMain>
             <p>{comment.body}</p>
+            </ItemCardMain>
+            <ItemCardFooter>
             <div className="commentInfo">
                 <p>{comment.author}</p>
                 <p>{formatDate(comment.created_at)}</p>
                 <p>{comment.votes}</p>
                 {user.username === comment.author&&<button disabled={isLoading} onClick={handleDelete}>Delete</button>}
             </div>
+            </ItemCardFooter>
+        </ItemCard>
         </article>
     )
 }

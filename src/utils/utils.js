@@ -2,7 +2,7 @@ import apiCall from "../hooks/apiCall"
 
 export const handleError = (err, setErrorMessage) => {
     console.log(err)
-    if (err.message === "timeout of 1000ms exceeded") {
+    if (err.code === "ECONNABORTED") {
         setErrorMessage("Request timed out")
         return err
     }

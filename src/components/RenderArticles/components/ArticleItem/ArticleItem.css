@@ -1,0 +1,15 @@
+.article-item {
+    display: flex;
+}
+
+.article-item a {
+    display: flex;
+}
+
+.article-item .item-card-main {
+    text-align: center;
+}
+
+.article-item .item-card-main h3 {
+    font-size: 1.5rem;
+}

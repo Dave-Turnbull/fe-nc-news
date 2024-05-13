@@ -1,8 +1,9 @@
 .sort-by-menu {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 0;
     margin: 10px 20px;
+    gap: 5px;
 }
 .sort-by-menu ul{
     display: flex;

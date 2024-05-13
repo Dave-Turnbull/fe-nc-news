@@ -28,7 +28,7 @@ export const NavBar = () => {
 
     return (
         <div className="nav-wrapper">
-            {showHamburger && <Hamburger setIsDroppedDown={setIsDroppedDown}/>}
+            {showHamburger && <Hamburger isDroppedDown={isDroppedDown} setIsDroppedDown={setIsDroppedDown}/>}
             <nav className={`nav-bar nav-hamb-${showHamburger} nav-drop-${isDroppedDown}`}>
                 <ul className="nav-bar-links">
                     <li key="home">
