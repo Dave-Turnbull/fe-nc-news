@@ -1,0 +1,19 @@
+#commentinputbody {
+    width: 100%;
+}
+.comment-input {
+    margin: 1rem 0;
+    border: 1px solid rgba(255, 0, 0, 0.068);
+    margin-bottom: 2rem;
+}
+
+.comment-input .item-card-main{
+    min-height: 1rem;
+    padding: 2rem;
+}
+.comment-input .item-card-footer {
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+}

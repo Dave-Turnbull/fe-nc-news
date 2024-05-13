@@ -1,20 +1,24 @@
 import apiCall from "../hooks/apiCall"
 
+export const handleError = (err, setErrorMessage) => {
+    console.log(err)
+    if (err.code === "ECONNABORTED") {
+        setErrorMessage("Request timed out")
+        return err
+    }
+    if (err.response) {
+        const errMessage = err.response.data.message
+        const formattedMessage = errMessage.charAt(0).toUpperCase() + errMessage.slice(1) + '.';
+        setErrorMessage(formattedMessage)
+        return err
+    }
+    setErrorMessage(err)
+}
+
 export const getTopics = (setTopics, setIsLoading) => {
     setIsLoading(true)
     return apiCall.get('topics').then((response) => {
         setTopics(response.data.topics)
-        setIsLoading(false)
-    }).catch(err => console.log(err))
-}
-
-export const changeVotes = (endpoint, votes, setVoteNum, setIsLoading) => {
-    setIsLoading(true)
-    const body = {
-        "inc_votes": votes
-    }
-    apiCall.patch(endpoint, body).then((response) => {
-        setVoteNum(response.data.votes)
         setIsLoading(false)
     }).catch(err => console.log(err))
 }

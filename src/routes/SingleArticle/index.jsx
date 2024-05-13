@@ -3,7 +3,12 @@ import { useParams } from 'react-router-dom'
 import { RenderComments } from "../../components/RenderComments/RenderComments";
 import { Voting } from "../../components/Voting/Voting";
 import { Loading } from "../../components/Loading/Loading";
+import { handleError } from "../../utils/utils";
 import apiCall from "../../hooks/apiCall";
+import { ItemCard } from "../../components/ItemCard/ItemCard";
+import { ItemCardMain } from "../../components/ItemCard/components/ItemCardMain/ItemCardMain";
+import { ItemCardFooter } from "../../components/ItemCard/components/ItemCardFooter/ItemCardFooter";
+import './index.css'
 
 export const SingleArticle = () => {
     const { article_id } = useParams();
@@ -16,10 +21,7 @@ export const SingleArticle = () => {
         apiCall.get(`articles/${article_id}`).then((response) => {
             setArticle(response.data)
             setIsLoading(false)
-        }).catch(err => {
-            console.log(err)
-            setErrorMessage(err.response.data.message)
-        })
+        }).catch(err => handleError(err, setErrorMessage))
     }, [])
 
     if (errorMessage) {
@@ -34,15 +36,23 @@ export const SingleArticle = () => {
     
     return (
         <main>
-            <article>
+            <article class="single-article">
+                <section>
+                <ItemCard>
                 <img src={article.article_img_url} />
-                <h2>{article.title}</h2>
-                <p>{article.author}</p>
-                <p>{article.body}</p>
-                <p>{article.created_at}</p>
-                <p>topic: {article.topic}</p>
-                <p>Comments: {article.comment_count}</p>
-                <Voting endpoint={`articles/${article_id}`} itemVotes={article.votes}/>
+                    <ItemCardMain>
+                        <h2>{article.title}</h2>
+                        <p>{article.author}</p>
+                        <p>{article.body}</p>
+                    </ItemCardMain>
+                    <ItemCardFooter>
+                        <p>{article.created_at}</p>
+                        <p>topic: {article.topic}</p>
+                        <p>Comments: {article.comment_count}</p>
+                        <Voting endpoint={`articles/${article_id}`} itemVotes={article.votes}/>
+                    </ItemCardFooter>
+                </ItemCard>
+                </section>
                 <section>
                     <RenderComments article_id={article_id} comment_count={article.comment_count}/>
                 </section>

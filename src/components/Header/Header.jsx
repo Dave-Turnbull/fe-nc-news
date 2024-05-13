@@ -1,14 +1,11 @@
-import { Link } from "react-router-dom"
-import './Header.css'
 import { Login } from "./components/Login/Login"
-import { NavBarLinks } from "./components/NavBarLinks.jsx/NavBarLinks"
+import { NavBar } from "./components/NavBar.jsx/NavBar"
+import './Header.css'
 
 export const Header = () => {
     return (
         <header>
-            <nav>
-                <NavBarLinks/>
-            </nav>
+            <NavBar/>
             <div>
                 <label htmlFor="searchbox">Search</label>
                 <input id="searchbox"/>

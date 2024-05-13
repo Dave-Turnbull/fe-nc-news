@@ -1,0 +1,50 @@
+.nav-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.nav-wrapper .nav-bar {
+    position: relative;
+}
+
+.nav-wrapper .nav-bar-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-wrapper .nav-bar-links a{
+    padding: 5px 10px;
+    color: #fff;
+}
+.nav-wrapper .nav-bar-links a:hover{
+    padding: 5px 10px;
+    color: #ababab;
+}
+
+.nav-wrapper .hamburger-btn {
+    width: 30px;
+}
+
+/*MOBILE MENU ACTIVE*/
+.nav-wrapper .nav-hamb-true.nav-drop-false {
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    opacity: 0;
+}
+.nav-wrapper .nav-hamb-true.nav-drop-true {
+    position: absolute;
+    visibility: visible;
+    top: 55px;
+    left: 0;
+    width: 100%;
+    opacity: 1;
+    max-height: 90vh;
+    background-color: rgb(28, 28, 28);
+    height: auto;
+    transition: opacity 0.3s ease-in-out;
+}
+.nav-wrapper .nav-hamb-true.nav-drop-true .nav-bar-links {
+    flex-direction: column;
+    flex-wrap: wrap;
+}

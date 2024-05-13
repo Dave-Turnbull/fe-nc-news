@@ -2,7 +2,12 @@ import { useState, useContext } from "react"
 import { UserContext } from "../../../../contexts/UserContext"
 import { CommentItem } from "../CommentItem.jsx/CommentItem"
 import { Loading } from "../../../Loading/Loading"
+import { handleError } from "../../../../utils/utils"
 import apiCall from "../../../../hooks/apiCall"
+import { ItemCard } from "../../../ItemCard/ItemCard"
+import { ItemCardMain } from "../../../ItemCard/components/ItemCardMain/ItemCardMain"
+import { ItemCardFooter } from "../../../ItemCard/components/ItemCardFooter/ItemCardFooter"
+import './CommentInput.css'
 
 export const CommentInput = ({articleId}) => {
     const [commentInputBody, setCommentInputBody] = useState('')
@@ -11,7 +16,7 @@ export const CommentInput = ({articleId}) => {
     const [errorMessage, setErrorMessage] = useState('')
     const {user} = useContext(UserContext)
     
-    if (!user) {
+    if (!user.username) {
         return <p>Login to comment</p>
     }
 
@@ -22,7 +27,7 @@ export const CommentInput = ({articleId}) => {
             return
         }
         const sendData = {
-            "username": user,
+            "username": user.username,
             "body": commentInputBody
         }
         //need to add some logic so the comments re-render after posting (to avoid key conflicts)
@@ -31,10 +36,7 @@ export const CommentInput = ({articleId}) => {
         apiCall.post(`articles/${articleId}/comments`, sendData).then((response) => {
             setPostedComment(response.data)
             setIsLoading(false)
-        }).catch(err => {
-            console.log(err)
-            setErrorMessage(err.response.data.message)
-        })
+        }).catch(err => handleError(err, setErrorMessage))
     }
 
     if (errorMessage) {
@@ -43,7 +45,6 @@ export const CommentInput = ({articleId}) => {
                 <p>Failed to post comment!</p>
                 <p>{errorMessage}</p>
                 <button onClick={() => {
-                    setPostedComment('')
                     setErrorMessage('')
                     setIsLoading(false)
                     }}>Try again</button>
@@ -62,12 +63,20 @@ export const CommentInput = ({articleId}) => {
     }
 
     return (
-        <form>
-            <p>Commenting as {user}</p>
-            <label htmlFor="commentinputbody">Text:</label>
-            <input id="commentinputbody" value={commentInputBody} onChange={e => setCommentInputBody(e.target.value)}/>
-            <button disabled={isLoading} onClick={handleSubmit}>Submit</button>
-            {isLoading?<Loading/>:<></>}
-        </form>
+        <div className="comment-input">
+        <ItemCard>
+            <ItemCardMain>
+                <h3>Leave a comment:</h3>
+                <form>
+                    <label htmlFor="commentinputbody">Text:</label>
+                    <textarea id="commentinputbody" value={commentInputBody} onChange={e => setCommentInputBody(e.target.value)}/>
+                    <button disabled={isLoading} onClick={handleSubmit}>{isLoading?<Loading/>:'Submit'}</button>
+                </form>
+            </ItemCardMain>
+            <ItemCardFooter>
+                <p>Commenting as {user.username}</p>
+            </ItemCardFooter>
+        </ItemCard>
+        </div>
     )
 }
